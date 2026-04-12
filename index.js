@@ -53,15 +53,19 @@ async function getAllMeetupData() {
 app.get("/meetup", async (req, res) => {
   try {
     const meetup = await getAllMeetupData();
-    res.json(meetup);
+    if(meetup){
+      res.status(201).json({message: 'All meetup data is this: ', data: meetup})
+    }else{
+      res.status(404).json({error: 'Meetup Data not found'})
+    }
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch the meetup Data" });
   }
 });
 
-async function getMeetupDataByTitle(meetupTitle) {
+async function getMeetupDataByTitle(eventTitle) {
   try {
-    const meetup = await Meetup.findOne({ eventTitle: meetupTitle });
+    const meetup = await Meetup.findOne({ meetupTitle: eventTitle });
     return meetup;
   } catch (error) {
     throw error;
@@ -71,7 +75,11 @@ async function getMeetupDataByTitle(meetupTitle) {
 app.get("/meetup/:meetupTitle", async (req, res) => {
   try {
     const meetup = await getMeetupDataByTitle(req.params.meetupTitle);
-    res.status(201).json({ message: "Meetup Data upload successfully", data: meetup });
+    if(meetup){
+      res.status(201).json({ message: "Meetup Data upload successfully", data: meetup });
+    }else{
+      res.status(404).json({error: 'Meetup Data not found'})
+    }
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch the meetup Data" });
   }
@@ -92,7 +100,7 @@ app.get("/meetup/Id/:meetupId", async (req, res) => {
     if(meetup){
       res.status(201).json({ message: "Meetup Data upload successfully", data: meetup });
     }else{
-      res.status(404).json({error: "failed to some meetup Data"})
+      res.status(404).json({error: "Meetup Data not found"})
     }
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch the meetup Data" });
