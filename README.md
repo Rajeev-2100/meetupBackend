@@ -30,7 +30,7 @@ A RESTful API built with **Node.js**, **Express.js**, **MongoDB**, and **Mongoos
 ### Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Rajeev-2100/meetupBackend
 cd meetup-api
 ```
 
