@@ -60,6 +60,7 @@ app.get("/meetup", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch the meetup Data" });
+    console.error(error.message)
   }
 });
 
