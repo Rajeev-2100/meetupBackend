@@ -19,7 +19,7 @@ initializeDatabase();
 async function createMeetupData(newMeetup) {
   try {
     const meetup = new Meetup(newMeetup);
-    const savedMeetup = meetup.save();
+    const savedMeetup = await meetup.save();
     return savedMeetup;
   } catch (error) {
     throw error;
@@ -28,7 +28,7 @@ async function createMeetupData(newMeetup) {
 
 app.post("/", async (req, res) => {
   try {
-    const meetup = createMeetupData(req.body);
+    const meetup = await createMeetupData(req.body);
     if (meetup) {
       res
         .status(201)
@@ -94,7 +94,7 @@ async function getMeetupDataByMeetupId (meetupId){
   }
 }
 
-app.get("/meetup/Id/:meetupId", async (req, res) => {
+app.get("/meetup/id/:meetupId", async (req, res) => {
   try {
     const meetup = await getMeetupDataByMeetupId( req.params.meetupId);
     if(meetup){
